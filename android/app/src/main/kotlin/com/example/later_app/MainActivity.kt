@@ -3,36 +3,59 @@ package com.example.later_app
 import android.content.Intent
 import android.os.Bundle
 import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.plugin.common.MethodChannel
 
 class MainActivity : FlutterActivity() {
+    private val CHANNEL = "com.example.later_app/share_handler"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Check if the app was opened via a share action
-        if (isOpenedFromShareIntent(intent)) {
-            // If opened from share intent, close the app immediately
-//            finish()
+        // Ensure FlutterEngine is available
+        flutterEngine?.let { engine ->
+            // Set up Method Channel
+            MethodChannel(
+                engine.dartExecutor.binaryMessenger,
+                CHANNEL
+            ).setMethodCallHandler { call, result ->
+                when (call.method) {
+                    "preventClose" -> {
+                        // Simply acknowledge the method call
+                        result.success(true)
+                    }
+                    "closeApp" -> {
+                        // Close the app
+                        finish()
+                        result.success(true)
+                    }
+                    else -> {
+                        // Handle unknown methods
+                        result.notImplemented()
+                    }
+                }
+            }
         }
+
+        // Handle share intent if app opened from share
+        handleShareIntent(intent)
     }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        // Update the current intent
         setIntent(intent)
+        handleShareIntent(intent)
+    }
 
-        // Check if the app was opened via a share action
+    private fun handleShareIntent(intent: Intent?) {
         if (isOpenedFromShareIntent(intent)) {
-            // If opened from share intent, close the app immediately
-//            finish()
+            // You can add additional logic here if needed
         }
     }
 
-    /**
-     * Helper function to check if the intent was triggered by a share action.
-     */
     private fun isOpenedFromShareIntent(intent: Intent?): Boolean {
-        // Check for a share action (ACTION_SEND) and ensure it has an extra (EXTRA_TEXT)
-        return intent?.action == Intent.ACTION_SEND && intent.hasExtra(Intent.EXTRA_TEXT)
+        return intent?.action == Intent.ACTION_SEND &&
+                (intent.hasExtra(Intent.EXTRA_TEXT) ||
+                        intent.hasExtra(Intent.EXTRA_STREAM))
     }
 }

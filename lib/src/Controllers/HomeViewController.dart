@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter/services.dart';
 
 import 'package:later_app/src/Services/ContentStreamService.dart';
-import 'package:later_app/src/States/HomeViewState.dart';
+import 'package:later_app/src/States/HomeVIewState.dart';
 import 'package:later_app/src/Support/Database/DB.dart';
 
 part 'HomeViewController.g.dart';

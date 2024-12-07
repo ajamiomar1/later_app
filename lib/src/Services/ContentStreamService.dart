@@ -64,6 +64,7 @@ Future<Map<String, String>> fetchOpenGraphData(String url) async {
         'title': title ?? 'No title available',
         'description': description ?? 'No description available',
         'image': image ?? '',
+        'url': url
       };
     }
   } catch (e) {

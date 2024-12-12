@@ -12,6 +12,8 @@ part 'HomeViewController.g.dart';
 @riverpod
 class HomeViewController extends _$HomeViewController {
   static const _platform = MethodChannel('com.example.later_app/share_handler');
+  final int pageSize = 10;
+  int currentPage = 0;
 
   @override
   Future<HomeViewState> build() async {
@@ -23,7 +25,12 @@ class HomeViewController extends _$HomeViewController {
     await _handleInitialSharing();
 
     // Fetch existing database content
-    var dbData = await DB.instance.query('shared_content');
+    var dbData = await DB.instance.query(
+        'shared_content',
+        limit: pageSize,
+        offset: currentPage * pageSize,
+        orderBy: 'creation_date DESC'
+    );
 
     return HomeViewState(sharedContent: dbData);
   }

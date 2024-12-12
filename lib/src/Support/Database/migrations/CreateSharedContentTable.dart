@@ -11,7 +11,8 @@ class CreateSharedContentTable extends Migration {
         title TEXT,
         description TEXT,
         image,
-        url TEXT
+        url TEXT,
+        creation_date DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     ''';
   }

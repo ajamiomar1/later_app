@@ -27,7 +27,7 @@ class DB {
 
   Future<Database> _initDatabase() async {
     return await openDatabase(
-      join( await getDatabasesPath(), 'zalatimo.db'),
+      join( await getDatabasesPath(), 'later_app.db'),
       version: 1,
       onCreate: (Database db, int version) async {
         Logger().i('Creating database tables');
@@ -52,9 +52,14 @@ class DB {
     return await db.insert(table, values);
   }
 
-  Future<List<Map<String, dynamic>>> query(String table) async {
+  Future<List<Map<String, dynamic>>> query(String table, {int limit = 10, int offset = 0, orderBy = 'creation_date DESC'}) async {
     final db = await database;
-    return await db.query(table);
+    return await db.query(
+        'shared_content',
+        limit: limit,
+        offset: offset,
+        orderBy: orderBy
+    );
   }
 
   // Update Data

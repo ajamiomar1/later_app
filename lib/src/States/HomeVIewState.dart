@@ -4,7 +4,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 
-part 'HomeVIewState.freezed.dart';
+part 'HomeViewState.freezed.dart';
 
 @freezed
 class HomeViewState with _$HomeViewState {

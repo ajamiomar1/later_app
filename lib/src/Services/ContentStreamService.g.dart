@@ -6,7 +6,7 @@ part of 'ContentStreamService.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getContentHash() => r'6648a2266bff73ffaad801b023cb0fc1578f2bf6';
+String _$getContentHash() => r'c94982755dde365f80ea8f829be8000ff7ffe6bc';
 
 /// See also [getContent].
 @ProviderFor(getContent)

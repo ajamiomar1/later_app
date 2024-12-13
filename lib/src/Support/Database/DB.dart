@@ -55,7 +55,7 @@ class DB {
   Future<List<Map<String, dynamic>>> query(String table, {int limit = 10, int offset = 0, orderBy = 'creation_date DESC'}) async {
     final db = await database;
     return await db.query(
-        'shared_content',
+        table,
         limit: limit,
         offset: offset,
         orderBy: orderBy
@@ -71,6 +71,16 @@ class DB {
   Future<int> delete(String table, String where, List<dynamic> whereArgs) async {
     final db = await database;
     return await db.delete(table, where: where, whereArgs: whereArgs);
+  }
+
+  //Search
+  Future<List<Map<String, dynamic>>> searchQuery(String table, String keyword) async {
+    final db = await database;
+    return await db.query(
+        table,
+        where: 'title LIKE ? OR description LIKE ?',
+        whereArgs: ['%$keyword%', '%$keyword%']
+    );
   }
 }
 

@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:later_app/src/Controllers/HomeViewController.dart';
 import 'package:later_app/src/Services/ContentStreamService.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:later_app/src/Views/SearchView.dart';
 
 class HomeView extends ConsumerWidget {
   @override
@@ -26,7 +27,10 @@ class HomeView extends ConsumerWidget {
         leading: IconButton(
           icon: const Icon(Icons.search),
           onPressed: () {
-            // Add search functionality here
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SearchView()),
+            );
           },
         ),
         title: const Center(

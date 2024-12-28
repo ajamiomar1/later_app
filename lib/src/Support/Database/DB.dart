@@ -76,6 +76,10 @@ class DB {
   //Search
   Future<List<Map<String, dynamic>>> searchQuery(String table, String keyword) async {
     final db = await database;
+    if(keyword.length < 2) {
+      return [];
+    }
+
     return await db.query(
         table,
         where: 'title LIKE ? OR description LIKE ?',
